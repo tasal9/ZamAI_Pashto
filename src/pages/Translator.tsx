@@ -144,7 +144,7 @@ function Translator() {
           <h1>Pashto Translator</h1>
           <p className="pashto-text page-title-pashto">پښتو ژباړن</p>
           <p className="page-subtitle">
-            Translate between Pashto and English with our AI-powered translation tool
+            Translate between Pashto and English with our dictionary-based translation tool
           </p>
         </div>
 

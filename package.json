@@ -7,7 +7,13 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
-  "keywords": ["pashto", "language-learning", "ai", "translation", "afghan-culture"],
+  "keywords": [
+    "pashto",
+    "language-learning",
+    "ai",
+    "translation",
+    "afghan-culture"
+  ],
   "author": "ZamAI",
   "license": "MIT",
   "description": "ZamAI Pashto - A language learning and cultural preservation platform for Pashto",

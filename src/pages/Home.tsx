@@ -18,9 +18,9 @@ const features = [
   },
   {
     icon: '🔄',
-    title: 'AI Translator',
-    titlePashto: 'AI ژباړن',
-    description: 'Translate between Pashto and English using AI-powered translation.',
+    title: 'Translator',
+    titlePashto: 'ژباړن',
+    description: 'Translate between Pashto and English using our dictionary-based tool.',
     link: '/translator',
   },
   {
@@ -33,9 +33,9 @@ const features = [
 ]
 
 const stats = [
-  { value: '44+', label: 'Alphabet Letters', labelPashto: 'الفبا توري' },
-  { value: '500+', label: 'Vocabulary Words', labelPashto: 'لغات' },
-  { value: '100+', label: 'Proverbs', labelPashto: 'متلونه' },
+  { value: '44', label: 'Alphabet Letters', labelPashto: 'الفبا توري' },
+  { value: '60+', label: 'Vocabulary Words', labelPashto: 'لغات' },
+  { value: '16', label: 'Proverbs', labelPashto: 'متلونه' },
   { value: '50M+', label: 'Native Speakers', labelPashto: 'مورنۍ ژبې ویونکي' },
 ]
 

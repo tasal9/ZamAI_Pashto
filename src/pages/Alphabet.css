@@ -1,0 +1,242 @@
+.alphabet-page {
+  padding-bottom: var(--spacing-3xl);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.page-title-pashto {
+  color: var(--primary-green);
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.page-subtitle {
+  color: var(--gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Controls */
+.alphabet-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 250px;
+  padding: var(--spacing-md);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-green);
+}
+
+.alphabet-info {
+  display: flex;
+  gap: var(--spacing-md);
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+/* Alphabet Grid */
+.alphabet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.letter-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.letter-card:hover {
+  border-color: var(--primary-green);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.letter-card.selected {
+  border-color: var(--primary-green);
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+.letter-pashto {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.letter-card.selected .letter-pashto {
+  color: var(--accent-gold);
+}
+
+.letter-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.letter-trans {
+  font-size: 0.625rem;
+  color: var(--gray-500);
+}
+
+.letter-card.selected .letter-trans {
+  color: var(--gray-200);
+}
+
+/* Letter Detail */
+.letter-detail {
+  position: relative;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.close-btn {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--gray-200);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+}
+
+.close-btn:hover {
+  background: var(--gray-300);
+}
+
+.letter-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-2xl);
+}
+
+.letter-detail-main {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.letter-big {
+  font-size: 8rem;
+  line-height: 1;
+  color: var(--primary-green);
+}
+
+.letter-info h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.letter-info .transliteration {
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-xs);
+}
+
+.letter-info .sound {
+  color: var(--gray-600);
+  font-style: italic;
+}
+
+.letter-example {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.letter-example h4 {
+  margin-bottom: var(--spacing-md);
+  color: var(--gray-600);
+}
+
+.example-word {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background: var(--gray-100);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+}
+
+.example-pashto {
+  font-size: 2rem;
+  color: var(--primary-green);
+}
+
+.example-meaning {
+  color: var(--gray-600);
+  font-style: italic;
+}
+
+/* Tips */
+.alphabet-tips {
+  background: linear-gradient(135deg, var(--primary-green-light) 0%, var(--primary-green) 100%);
+  color: var(--white);
+}
+
+.alphabet-tips h3 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.alphabet-tips ul {
+  list-style: none;
+}
+
+.alphabet-tips li {
+  padding: var(--spacing-sm) 0;
+  padding-left: var(--spacing-lg);
+  position: relative;
+}
+
+.alphabet-tips li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-gold);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .alphabet-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+
+  .letter-detail-content {
+    grid-template-columns: 1fr;
+  }
+
+  .letter-detail-main {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .letter-big {
+    font-size: 5rem;
+  }
+}

@@ -1,0 +1,356 @@
+.about-page {
+  padding-bottom: var(--spacing-3xl);
+}
+
+/* Mission Section */
+.mission-section {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.mission-card {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
+  color: var(--white);
+  text-align: center;
+}
+
+.mission-card h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mission-card .pashto-text {
+  color: var(--accent-gold);
+  margin-bottom: var(--spacing-lg);
+}
+
+.mission-text {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+/* What We Do */
+.what-we-do {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.what-we-do h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.what-we-do .pashto-text {
+  text-align: center;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-xl);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
+}
+
+.service-card {
+  text-align: center;
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.service-card h3 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-card .pashto-text {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+}
+
+.service-card p:last-child {
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+/* Projects Section */
+.projects-section {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.projects-section h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.projects-section .pashto-text {
+  text-align: center;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-xl);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+}
+
+.project-card h3 {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+}
+
+.project-desc {
+  color: var(--gray-600);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border-radius: var(--radius-sm);
+}
+
+/* About Language */
+.about-language {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.language-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+.language-text h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.language-text .pashto-text {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-lg);
+}
+
+.language-text p {
+  color: var(--gray-700);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-lg);
+}
+
+.language-text ul {
+  list-style: none;
+}
+
+.language-text li {
+  padding: var(--spacing-sm) 0;
+  color: var(--gray-600);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.language-text li:last-child {
+  border-bottom: none;
+}
+
+.pashto-sample {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  background: var(--gray-50);
+  border-radius: var(--radius-xl);
+  min-width: 200px;
+}
+
+.pashto-sample h4 {
+  font-size: 4rem;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-sm);
+}
+
+.pashto-sample p {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-lg);
+}
+
+.flag-colors {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.flag-colors span {
+  width: 40px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+}
+
+.flag-black {
+  background: var(--gray-900);
+}
+
+.flag-red {
+  background: var(--primary-red);
+}
+
+.flag-green {
+  background: var(--primary-green);
+}
+
+/* Contributing */
+.contributing-section {
+  margin-bottom: var(--spacing-3xl);
+  text-align: center;
+}
+
+.contributing-section h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.contributing-section .pashto-text {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-lg);
+}
+
+.contributing-text {
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  color: var(--gray-600);
+}
+
+.contribute-ways {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.contribute-card {
+  padding: var(--spacing-xl);
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.contribute-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.contribute-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: var(--spacing-md);
+}
+
+.contribute-card h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-green);
+}
+
+.contribute-card p {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+/* Contact */
+.contact-section {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.contact-section h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.contact-section .pashto-text {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-lg);
+}
+
+.contact-section > p:not(.pashto-text) {
+  color: var(--gray-600);
+  margin-bottom: var(--spacing-xl);
+}
+
+.contact-links {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+  color: var(--gray-700);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.contact-link:hover {
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+/* Footer Quote */
+.footer-quote {
+  text-align: center;
+  padding: var(--spacing-2xl) 0;
+}
+
+.quote-pashto {
+  font-size: 2rem;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-sm);
+}
+
+.quote-trans {
+  font-style: italic;
+  color: var(--gray-600);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contribute-ways {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .language-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .pashto-sample {
+    order: -1;
+  }
+
+  .contribute-ways {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-links {
+    flex-direction: column;
+  }
+}

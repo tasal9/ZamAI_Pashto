@@ -1,0 +1,271 @@
+.proverbs-page {
+  padding-bottom: var(--spacing-3xl);
+}
+
+/* Featured Proverb */
+.featured-proverb {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
+  color: var(--white);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.featured-badge {
+  display: inline-block;
+  background: var(--accent-gold);
+  color: var(--gray-900);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+}
+
+.featured-pashto {
+  font-size: 2rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+.featured-trans {
+  font-style: italic;
+  opacity: 0.8;
+  margin-bottom: var(--spacing-md);
+}
+
+.featured-english {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: var(--spacing-md);
+}
+
+.featured-meaning {
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+.random-btn {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.random-btn:hover {
+  background: var(--white);
+  color: var(--primary-green);
+}
+
+/* Category Filter */
+.proverbs-filter {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.proverbs-filter h3 {
+  margin-bottom: var(--spacing-md);
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.category-tab {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--gray-100);
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-tab:hover {
+  background: var(--gray-200);
+}
+
+.category-tab.active {
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+/* Proverbs Grid */
+.proverbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.proverb-card {
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.proverb-card:hover {
+  transform: translateY(-4px);
+}
+
+.proverb-card.expanded {
+  border-color: var(--primary-green);
+}
+
+.proverb-category-tag {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  background: var(--gray-100);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.proverb-pashto {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-sm);
+  padding-right: 80px;
+}
+
+.proverb-trans {
+  font-style: italic;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.proverb-english {
+  font-weight: 500;
+  margin-bottom: var(--spacing-md);
+}
+
+.proverb-meaning {
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--gray-200);
+}
+
+.proverb-meaning h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-green);
+}
+
+.proverb-meaning p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+.expand-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  text-align: center;
+  margin-top: var(--spacing-sm);
+}
+
+/* Cultural Context */
+.cultural-context {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.cultural-context h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.cultural-context .pashto-text {
+  text-align: center;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-xl);
+}
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.context-card h3 {
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-green);
+}
+
+.context-card p {
+  color: var(--gray-600);
+  line-height: 1.7;
+}
+
+/* Landay Section */
+.landay-section {
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--white) 100%);
+  text-align: center;
+}
+
+.landay-section h2 {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+}
+
+.landay-section > p {
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+  color: var(--gray-600);
+}
+
+.landay-example {
+  background: var(--white);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.landay-pashto {
+  font-size: 1.5rem;
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-sm);
+}
+
+.landay-trans {
+  font-style: italic;
+  color: var(--gray-500);
+  margin-bottom: var(--spacing-md);
+}
+
+.landay-english {
+  color: var(--gray-700);
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .proverbs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .context-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-pashto {
+    font-size: 1.5rem;
+  }
+
+  .proverb-pashto {
+    padding-right: 0;
+  }
+
+  .proverb-category-tag {
+    position: static;
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+  }
+}

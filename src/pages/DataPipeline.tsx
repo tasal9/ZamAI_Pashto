@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './DataPipeline.css'
 
 const repoBaseUrl = 'https://github.com/tasal9/ZamAI_Pashto/blob/main'
@@ -35,50 +36,60 @@ const sourceCards = [
 
 const runnableAssets = [
   {
-  title: 'Pinned Python requirements',
+    title: 'Pinned Python requirements',
     language: 'bash',
-  description: 'Install the exact Python dependencies used by the scraping utilities.',
-  path: 'scripts/requirements.txt',
-  command: 'pip install -r scripts/requirements.txt',
+    description: 'Install the exact Python dependencies used by the scraping utilities.',
+    path: 'scripts/requirements.txt',
+    command: 'pip install -r scripts/requirements.txt',
   },
   {
-  title: 'News spider',
-  language: 'python',
-  description: 'Crawl article pages from Pashto news sites and write the results to JSON.',
-  path: 'scripts/pipeline/news_spider.py',
-  command: 'python scripts/pipeline/news_spider.py --output data/pashto_news.json',
-  },
-  {
-  title: 'PDF discovery spider',
+    title: 'News spider',
     language: 'python',
-  description: 'Discover PDF links from an archive page and download them into a target folder.',
-  path: 'scripts/pipeline/pdf_spider.py',
-  command: 'python scripts/pipeline/pdf_spider.py --start-url https://example-pashto-books-site.com/ --output-dir data/downloaded_pdfs',
+    description: 'Crawl article pages from Pashto news sites and write the results to JSON.',
+    path: 'scripts/pipeline/news_spider.py',
+    command: 'python scripts/pipeline/news_spider.py --output data/pashto_news.json',
   },
   {
-  title: 'PDF text extractor',
+    title: 'PDF discovery spider',
     language: 'python',
-  description: 'Convert a folder of downloaded PDFs into structured JSON with metadata.',
-  path: 'scripts/pipeline/extract_pdf_text.py',
-  command: 'python scripts/pipeline/extract_pdf_text.py data/downloaded_pdfs data/pashto_books.json',
+    description: 'Discover PDF links from an archive page and download them into a target folder.',
+    path: 'scripts/pipeline/pdf_spider.py',
+    command: 'python scripts/pipeline/pdf_spider.py --start-url https://example-pashto-books-site.com/ --output-dir data/downloaded_pdfs',
   },
   {
-  title: 'Book page scraper',
+    title: 'PDF text extractor',
     language: 'python',
-  description: 'Scrape simple Pashto book listing pages into JSON with configurable selectors.',
-  path: 'scripts/pipeline/scrape_pashto_books.py',
-  command: 'python scripts/pipeline/scrape_pashto_books.py https://example-pashto-site.com/books --output data/books.json',
+    description: 'Convert a folder of downloaded PDFs into structured JSON with metadata.',
+    path: 'scripts/pipeline/extract_pdf_text.py',
+    command: 'python scripts/pipeline/extract_pdf_text.py data/downloaded_pdfs data/pashto_books.json',
   },
   {
-  title: 'Script usage guide',
-  language: 'docs',
-  description: 'Reference the quick-start guide if you want the commands and file overview in one place.',
-  path: 'scripts/README.md',
-  command: 'open scripts/README.md',
+    title: 'Book page scraper',
+    language: 'python',
+    description: 'Scrape simple Pashto book listing pages into JSON with configurable selectors.',
+    path: 'scripts/pipeline/scrape_pashto_books.py',
+    command: 'python scripts/pipeline/scrape_pashto_books.py https://example-pashto-site.com/books --output data/books.json',
+  },
+  {
+    title: 'Script usage guide',
+    language: 'docs',
+    description: 'Reference the quick-start guide if you want the commands and file overview in one place.',
+    path: 'scripts/README.md',
+    command: 'open scripts/README.md',
   },
 ]
 
 function DataPipeline() {
+  const [copiedCommand, setCopiedCommand] = useState<string | null>(null)
+
+  const handleCopyCommand = async (command: string) => {
+    await navigator.clipboard.writeText(command)
+    setCopiedCommand(command)
+    window.setTimeout(() => {
+      setCopiedCommand((currentCommand) => (currentCommand === command ? null : currentCommand))
+    }, 1600)
+  }
+
   return (
     <div className="pipeline-page">
       <section className="pipeline-hero">
@@ -172,6 +183,18 @@ function DataPipeline() {
                 >
                   Open file on GitHub
                 </a>
+                <div className="asset-command-header">
+                  <span>Command</span>
+                  <button
+                    type="button"
+                    className="asset-copy-button"
+                    onClick={() => {
+                      void handleCopyCommand(asset.command)
+                    }}
+                  >
+                    {copiedCommand === asset.command ? 'Copied' : 'Copy command'}
+                  </button>
+                </div>
                 <pre className="code-block asset-command-block">
                   <code>{asset.command}</code>
                 </pre>

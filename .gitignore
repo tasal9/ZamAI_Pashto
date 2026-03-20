@@ -36,6 +36,10 @@ coverage/
 *.tmp
 *.temp
 
+# Python
+__pycache__/
+*.py[cod]
+
 
 #Ignore insiders AI rules
 .github/instructions/codacy.instructions.md

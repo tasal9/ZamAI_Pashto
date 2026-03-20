@@ -1,5 +1,7 @@
 import './DataPipeline.css'
 
+const repoBaseUrl = 'https://github.com/tasal9/ZamAI_Pashto/blob/main'
+
 const pipelineSteps = [
   {
     title: 'Discover sources',
@@ -31,195 +33,48 @@ const sourceCards = [
   { name: 'Shamela Library', type: 'Books', url: 'shamela.ws' },
 ]
 
-const codeExamples = [
+const runnableAssets = [
   {
-    title: 'Install dependencies',
+  title: 'Pinned Python requirements',
     language: 'bash',
-    code: `pip install scrapy requests beautifulsoup4 pypdf2 pdfplumber lxml datasets`,
+  description: 'Install the exact Python dependencies used by the scraping utilities.',
+  path: 'scripts/requirements.txt',
+  command: 'pip install -r scripts/requirements.txt',
   },
   {
-    title: 'Scrapy spider for Pashto news sites',
-    language: 'python',
-    code: `import scrapy
-from scrapy.linkextractors import LinkExtractor
-
-
-class PashtoNewsSpider(scrapy.Spider):
-    name = 'pashto_news'
-
-    start_urls = [
-        'https://www.bbc.com/ps',
-        'https://www.voanews.com/ps',
-        'https://pajhwok.com/',
-    ]
-
-    allowed_domains = [
-        'bbc.com',
-        'voanews.com',
-        'pajhwok.com',
-    ]
-
-    def parse(self, response):
-        for article_link in response.css('a::attr(href)').getall():
-            if article_link and '/article/' in str(article_link):
-                yield response.follow(article_link, self.parse_article)
-
-        next_page = response.css('a.next::attr(href)').get()
-        if next_page:
-            yield response.follow(next_page, self.parse)
-
-    def parse_article(self, response):
-        yield {
-            'title': response.css('h1::text').get(),
-            'url': response.url,
-            'content': ' '.join(response.css('article p::text').getall()),
-            'date': response.css('time::attr(datetime)').get(),
-        }`,
+  title: 'News spider',
+  language: 'python',
+  description: 'Crawl article pages from Pashto news sites and write the results to JSON.',
+  path: 'scripts/pipeline/news_spider.py',
+  command: 'python scripts/pipeline/news_spider.py --output data/pashto_news.json',
   },
   {
-    title: 'Spider for PDF discovery and download',
+  title: 'PDF discovery spider',
     language: 'python',
-    code: `import scrapy
-from scrapy.pipelines.files import FilesPipeline
-
-
-class PdfPipeline(FilesPipeline):
-    def file_path(self, request, response=None, info=None):
-        filename = request.url.split('/')[-1]
-        return filename
-
-
-class PashtoPDFSpider(scrapy.Spider):
-    name = 'pashto_pdfs'
-
-    start_urls = [
-        'https://example-pashto-books-site.com/',
-    ]
-
-    custom_settings = {
-        'ITEM_PIPELINES': {PdfPipeline: 100},
-        'FILES_STORE': 'downloaded_pdfs',
-    }
-
-    def parse(self, response):
-        pdf_links = response.css('a[href$=".pdf"]::attr(href)').getall()
-
-        for pdf_url in pdf_links:
-            yield {
-                'file_urls': [response.urljoin(pdf_url)],
-            }`,
+  description: 'Discover PDF links from an archive page and download them into a target folder.',
+  path: 'scripts/pipeline/pdf_spider.py',
+  command: 'python scripts/pipeline/pdf_spider.py --start-url https://example-pashto-books-site.com/ --output-dir data/downloaded_pdfs',
   },
   {
-    title: 'Extract text from downloaded PDFs',
+  title: 'PDF text extractor',
     language: 'python',
-    code: `import json
-import os
-
-import pdfplumber
-
-
-def extract_text_from_pdfs(pdf_folder, output_file):
-    extracted_data = []
-
-    for filename in os.listdir(pdf_folder):
-        if not filename.endswith('.pdf'):
-            continue
-
-        pdf_path = os.path.join(pdf_folder, filename)
-        text_content = []
-
-        try:
-            with pdfplumber.open(pdf_path) as pdf:
-                for page in pdf.pages:
-                    text = page.extract_text()
-                    if text:
-                        text_content.append(text)
-
-            extracted_data.append({
-                'filename': filename,
-                'text': '\n'.join(text_content),
-                'word_count': len(' '.join(text_content).split()),
-            })
-            print(f'Extracted: {filename}')
-        except Exception as error:
-            print(f'Error extracting {filename}: {error}')
-
-    with open(output_file, 'w', encoding='utf-8') as output_handle:
-        json.dump(extracted_data, output_handle, ensure_ascii=False, indent=2)
-
-    return extracted_data`,
+  description: 'Convert a folder of downloaded PDFs into structured JSON with metadata.',
+  path: 'scripts/pipeline/extract_pdf_text.py',
+  command: 'python scripts/pipeline/extract_pdf_text.py data/downloaded_pdfs data/pashto_books.json',
   },
   {
-    title: 'BeautifulSoup for simple book pages',
+  title: 'Book page scraper',
     language: 'python',
-    code: `import json
-
-import requests
-from bs4 import BeautifulSoup
-
-
-def scrape_pashto_books(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-    }
-
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.content, 'lxml')
-
-    books = []
-
-    for book in soup.select('.book-item'):
-        title = book.select_one('.book-title').text.strip()
-        author = book.select_one('.book-author').text.strip()
-        content = book.select_one('.book-content').text.strip()
-
-        books.append({
-            'title': title,
-            'author': author,
-            'content': content,
-            'url': book.select_one('a')['href'],
-        })
-
-    return books
-
-
-books = scrape_pashto_books('https://example-pashto-site.com/books')
-
-with open('pashto_books.json', 'w', encoding='utf-8') as output_handle:
-    json.dump(books, output_handle, ensure_ascii=False, indent=2)`,
+  description: 'Scrape simple Pashto book listing pages into JSON with configurable selectors.',
+  path: 'scripts/pipeline/scrape_pashto_books.py',
+  command: 'python scripts/pipeline/scrape_pashto_books.py https://example-pashto-site.com/books --output data/books.json',
   },
   {
-    title: 'Clean Pashto text and push to Hugging Face',
-    language: 'python',
-    code: `from datasets import Dataset
-from nlpashto import Cleaner, Segmenter
-
-
-def clean_pashto_text(text):
-    cleaner = Cleaner()
-    return cleaner.clean(
-        text,
-        remove_emojis=True,
-        normalize_nums=True,
-        remove_puncs=False,
-        remove_special_chars=True,
-    )
-
-
-def segment_pashto_words(text):
-    segmenter = Segmenter()
-    return segmenter.segment(text)
-
-
-dataset = Dataset.from_list([
-    {
-        'filename': 'sample.pdf',
-        'text': clean_pashto_text('په ژوند کی علم او پوهه مهمه ده'),
-    },
-])
-
-dataset.push_to_hub('your_username/pashto-dataset')`,
+  title: 'Script usage guide',
+  language: 'docs',
+  description: 'Reference the quick-start guide if you want the commands and file overview in one place.',
+  path: 'scripts/README.md',
+  command: 'open scripts/README.md',
   },
 ]
 
@@ -293,20 +148,32 @@ function DataPipeline() {
       <section className="pipeline-code-section">
         <div className="container">
           <div className="section-header">
-            <h2>Reference Code</h2>
-            <p className="pashto-text">نمونه کوډ</p>
-            <p>Adapt selectors, domains, and storage paths for each target site before running a crawler at scale.</p>
+            <h2>Runnable Assets</h2>
+            <p className="pashto-text">چلېدونکي فایلونه او قوماندې</p>
+            <p>Use the actual repository files below instead of copying snippets out of the page.</p>
           </div>
 
-          <div className="code-example-list">
-            {codeExamples.map((example) => (
-              <article key={example.title} className="code-example card">
-                <div className="code-example-header">
-                  <h3>{example.title}</h3>
-                  <span className="code-language">{example.language}</span>
+          <div className="asset-grid">
+            {runnableAssets.map((asset) => (
+              <article key={asset.title} className="asset-card card">
+                <div className="asset-card-header">
+                  <div>
+                    <h3>{asset.title}</h3>
+                    <p>{asset.description}</p>
+                  </div>
+                  <span className="code-language">{asset.language}</span>
                 </div>
-                <pre className="code-block">
-                  <code>{example.code}</code>
+                <p className="asset-path">{asset.path}</p>
+                <a
+                  className="asset-link"
+                  href={`${repoBaseUrl}/${asset.path}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open file on GitHub
+                </a>
+                <pre className="code-block asset-command-block">
+                  <code>{asset.command}</code>
                 </pre>
               </article>
             ))}

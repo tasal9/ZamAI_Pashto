@@ -11,10 +11,10 @@ Runnable reference scripts extracted from the pipeline page live in `scripts/pip
 
 ## Quick Start
 
-Install the Python packages you need for the specific script you want to run:
+Install the pinned Python packages for the scraping utilities:
 
 ```bash
-pip install scrapy requests beautifulsoup4 pdfplumber lxml
+pip install -r scripts/requirements.txt
 ```
 
 Examples:

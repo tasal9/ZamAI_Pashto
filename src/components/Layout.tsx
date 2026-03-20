@@ -8,6 +8,7 @@ const navItems = [
   { path: '/vocabulary', label: 'Vocabulary', labelPashto: 'لغات' },
   { path: '/translator', label: 'Translator', labelPashto: 'ژباړن' },
   { path: '/proverbs', label: 'Proverbs', labelPashto: 'متلونه' },
+  { path: '/resources', label: 'Resources', labelPashto: 'سرچینې' },
   { path: '/pipeline', label: 'Pipeline', labelPashto: 'پایپ لاین' },
   { path: '/about', label: 'About', labelPashto: 'درباره' },
 ]
@@ -59,20 +60,20 @@ function Layout() {
         <div className="container footer-content">
           <div className="footer-brand">
             <h3>ZamAI Pashto</h3>
-            <p className="pashto-text">پښتو ژبه زده کول او افغان کلتور ساتل</p>
-            <p>Learn Pashto & Preserve Afghan Culture</p>
+            <p className="pashto-text">د پښتو ویونکو، زده کوونکو او جوړوونکو لپاره یو ګډ کور</p>
+            <p>A shared digital home for Pashto speakers, learners, and builders.</p>
           </div>
           <div className="footer-links">
             <h4>Quick Links</h4>
             <nav>
-              {navItems.slice(0, 5).map((item) => (
+              {navItems.slice(0, 6).map((item) => (
                 <Link key={item.path} to={item.path}>{item.label}</Link>
               ))}
             </nav>
           </div>
           <div className="footer-about">
             <h4>About ZamAI</h4>
-            <p>Open-source tools for Pashto language learning, AI translation, and cultural preservation.</p>
+            <p>Open-source tools, cultural resources, and language infrastructure designed to strengthen Pashto online.</p>
           </div>
         </div>
         <div className="footer-bottom">

@@ -7,6 +7,7 @@ import Translator from './pages/Translator'
 import Proverbs from './pages/Proverbs'
 import About from './pages/About'
 import DataPipeline from './pages/DataPipeline'
+import Resources from './pages/Resources'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="vocabulary" element={<Vocabulary />} />
         <Route path="translator" element={<Translator />} />
         <Route path="proverbs" element={<Proverbs />} />
+        <Route path="resources" element={<Resources />} />
         <Route path="pipeline" element={<DataPipeline />} />
         <Route path="about" element={<About />} />
       </Route>

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from urllib.parse import unquote, urlparse
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -13,7 +14,9 @@ from scrapy.pipelines.files import FilesPipeline
 
 class PdfPipeline(FilesPipeline):
     def file_path(self, request, response=None, info=None, *, item=None):
-        return Path(request.url).name or "downloaded.pdf"
+        parsed_url = urlparse(request.url)
+        filename = Path(unquote(parsed_url.path)).name
+        return filename or "downloaded.pdf"
 
 
 class PashtoPdfSpider(scrapy.Spider):

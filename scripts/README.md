@@ -26,4 +26,4 @@ python scripts/pipeline/extract_pdf_text.py data/downloaded_pdfs data/pashto_boo
 python scripts/pipeline/scrape_pashto_books.py https://example-pashto-site.com/books --output data/books.json
 ```
 
-Adapt domains, CSS selectors, and allowed URLs for each source before running against a real site.
+These scripts are templates, not drop-in production crawlers. Adapt domains, CSS selectors, pagination rules, and output paths for each source before running against a real site.

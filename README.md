@@ -92,6 +92,10 @@ The application will be available at `http://localhost:3000`
 npm run build
 ```
 
+### Testing Follow-up
+
+This project does not yet include a frontend test runner. When one is added, start with a small interaction test for the pipeline page that verifies asset metadata renders and that the copy-command button transitions between its default and copied or failed states.
+
 ## 🛠️ Tech Stack
 
 - **Frontend Framework:** React 19

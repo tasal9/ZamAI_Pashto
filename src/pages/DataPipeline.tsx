@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import './DataPipeline.css'
 
-const repoBaseUrl = 'https://github.com/tasal9/ZamAI_Pashto/blob/main'
+const repoBaseUrl = import.meta.env.VITE_REPO_BASE_URL ?? 'https://github.com/tasal9/ZamAI_Pashto/blob/main'
+
+type CopyState = {
+  command: string
+  status: 'success' | 'error'
+  message: string
+}
 
 const pipelineSteps = [
   {
@@ -80,14 +86,31 @@ const runnableAssets = [
 ]
 
 function DataPipeline() {
-  const [copiedCommand, setCopiedCommand] = useState<string | null>(null)
+  const [copyState, setCopyState] = useState<CopyState | null>(null)
 
   const handleCopyCommand = async (command: string) => {
-    await navigator.clipboard.writeText(command)
-    setCopiedCommand(command)
+    try {
+      if (!navigator.clipboard?.writeText) {
+        throw new Error('Clipboard API unavailable')
+      }
+
+      await navigator.clipboard.writeText(command)
+      setCopyState({
+        command,
+        status: 'success',
+        message: 'Copied',
+      })
+    } catch {
+      setCopyState({
+        command,
+        status: 'error',
+        message: 'Copy failed',
+      })
+    }
+
     window.setTimeout(() => {
-      setCopiedCommand((currentCommand) => (currentCommand === command ? null : currentCommand))
-    }, 1600)
+      setCopyState((currentState) => (currentState?.command === command ? null : currentState))
+    }, 1800)
   }
 
   return (
@@ -192,9 +215,14 @@ function DataPipeline() {
                       void handleCopyCommand(asset.command)
                     }}
                   >
-                    {copiedCommand === asset.command ? 'Copied' : 'Copy command'}
+                    {copyState?.command === asset.command ? copyState.message : 'Copy command'}
                   </button>
                 </div>
+                {copyState?.command === asset.command && copyState.status === 'error' ? (
+                  <p className="asset-copy-feedback" role="status">
+                    Clipboard access is unavailable here. Copy the command manually.
+                  </p>
+                ) : null}
                 <pre className="code-block asset-command-block">
                   <code>{asset.command}</code>
                 </pre>

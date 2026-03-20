@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './About.css'
 
 function About() {
@@ -117,8 +118,26 @@ function About() {
                 <span className="tag">ETL</span>
                 <span className="tag">NLP</span>
               </div>
+              <Link to="/pipeline" className="project-link">
+                Explore the pipeline workflow
+              </Link>
             </div>
           </div>
+        </div>
+
+        <div className="pipeline-cta card">
+          <div>
+            <p className="pipeline-cta-kicker">Corpus Building</p>
+            <h2>See how the Pashto data pipeline works</h2>
+            <p className="pashto-text">د پښتو د معلوماتو پایپ لاین وګورئ</p>
+            <p>
+              Review the collection workflow, source guidance, and runnable scraping scripts used to gather
+              articles, PDFs, and training corpora.
+            </p>
+          </div>
+          <Link to="/pipeline" className="btn btn-primary btn-lg pipeline-cta-link">
+            Open Data Pipeline
+          </Link>
         </div>
 
         {/* About Pashto Language */}

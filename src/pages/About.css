@@ -111,6 +111,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
 }
 
 .tag {
@@ -119,6 +120,53 @@
   background: var(--gray-100);
   color: var(--gray-600);
   border-radius: var(--radius-sm);
+}
+
+.project-link {
+  color: var(--primary-green);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.project-link:hover {
+  color: var(--accent-teal);
+}
+
+.pipeline-cta {
+  margin-bottom: var(--spacing-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  background: linear-gradient(135deg, rgba(11, 116, 96, 0.08) 0%, rgba(218, 165, 32, 0.16) 100%);
+  border: 1px solid rgba(11, 116, 96, 0.12);
+}
+
+.pipeline-cta h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.pipeline-cta .pashto-text {
+  color: var(--primary-green);
+  margin-bottom: var(--spacing-md);
+}
+
+.pipeline-cta p:last-of-type {
+  max-width: 640px;
+  color: var(--gray-700);
+}
+
+.pipeline-cta-kicker {
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent-teal);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pipeline-cta-link {
+  flex-shrink: 0;
 }
 
 /* About Language */
@@ -352,5 +400,10 @@
 
   .contact-links {
     flex-direction: column;
+  }
+
+  .pipeline-cta {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

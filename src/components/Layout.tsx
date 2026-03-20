@@ -10,7 +10,7 @@ const navItems = [
   { path: '/proverbs', label: 'Proverbs', labelPashto: 'متلونه' },
   { path: '/resources', label: 'Resources', labelPashto: 'سرچینې' },
   { path: '/pipeline', label: 'Pipeline', labelPashto: 'پایپ لاین' },
-  { path: '/about', label: 'About', labelPashto: 'درباره' },
+  { path: '/about', label: 'About', labelPashto: 'په هکله' },
 ]
 
 function Layout() {

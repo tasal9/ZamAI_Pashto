@@ -11,16 +11,27 @@ interface ResourceCollectionPageProps {
 function ResourceCollectionPage({ collection }: ResourceCollectionPageProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [entries, setEntries] = useState<ResourceEntry[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const loadEntries = () => {
-      setEntries(getVisibleEntries(collection))
+    let isActive = true
+
+    const loadEntries = async () => {
+      setLoading(true)
+      const nextEntries = await getVisibleEntries(collection)
+
+      if (!isActive) {
+        return
+      }
+
+      setEntries(nextEntries)
+      setLoading(false)
     }
 
-    loadEntries()
-    window.addEventListener('storage', loadEntries)
+    void loadEntries()
+
     return () => {
-      window.removeEventListener('storage', loadEntries)
+      isActive = false
     }
   }, [collection])
 
@@ -73,7 +84,7 @@ function ResourceCollectionPage({ collection }: ResourceCollectionPageProps) {
             <div className="collection-toolbar-stats">
               <span>{filteredEntries.length} visible entries</span>
               <span>{approvedCount} community-approved</span>
-              <Link to="/resources/moderation">Moderation queue</Link>
+              <Link to="/resources/moderation">Editor moderation</Link>
             </div>
           </div>
         </div>
@@ -81,7 +92,9 @@ function ResourceCollectionPage({ collection }: ResourceCollectionPageProps) {
 
       <section className="collection-results">
         <div className="container">
-          <div className="collection-grid">
+          {loading ? <div className="collection-empty card"><h3>Loading entries...</h3></div> : null}
+
+          {!loading ? <div className="collection-grid">
             {filteredEntries.map((entry) => (
               <article key={entry.id} className="collection-entry card">
                 <div className="collection-entry-header">
@@ -109,9 +122,9 @@ function ResourceCollectionPage({ collection }: ResourceCollectionPageProps) {
                 ) : null}
               </article>
             ))}
-          </div>
+          </div> : null}
 
-          {filteredEntries.length === 0 ? (
+          {!loading && filteredEntries.length === 0 ? (
             <div className="collection-empty card">
               <h3>No entries matched your search</h3>
               <p>Try a different keyword or add a new submission through the resources page.</p>

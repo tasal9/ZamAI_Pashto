@@ -1,6 +1,7 @@
 import { seededResourceEntries, type ResourceCollectionKey, type ResourceEntry } from '../data/resourceLibrary'
 
-const STORAGE_KEY = 'zamai-community-submissions-v1'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
+const EDITOR_TOKEN_KEY = 'zamai-editor-token-v1'
 
 export type SubmissionStatus = 'pending' | 'approved' | 'rejected'
 
@@ -30,83 +31,128 @@ export interface CommunitySubmissionDraft {
   tags: string[]
 }
 
+export interface EditorSession {
+  email: string
+}
+
+export interface ApprovedExportResult {
+  exportedAt: string
+  path: string
+  count: number
+}
+
+export interface ApprovedImportResult {
+  importedCount: number
+  totalApproved: number
+  path: string
+}
+
+async function requestJson<T>(path: string, init: RequestInit = {}, token?: string): Promise<T> {
+  const headers = new Headers(init.headers)
+
+  if (!headers.has('Content-Type') && init.body) {
+    headers.set('Content-Type', 'application/json')
+  }
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`)
+  }
+
+  const response = await fetch(`${API_BASE_URL}${path}`, {
+    ...init,
+    headers,
+  })
+
+  const responseText = await response.text()
+  const responseData = responseText ? JSON.parse(responseText) : null
+
+  if (!response.ok) {
+    throw new Error(responseData?.message ?? 'Request failed.')
+  }
+
+  return responseData as T
+}
+
 function canUseStorage() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 }
 
-export function getCommunitySubmissions(): CommunitySubmission[] {
+export function getStoredEditorToken() {
   if (!canUseStorage()) {
-    return []
+    return null
   }
 
-  const rawValue = window.localStorage.getItem(STORAGE_KEY)
-  if (!rawValue) {
-    return []
-  }
-
-  try {
-    return JSON.parse(rawValue) as CommunitySubmission[]
-  } catch {
-    return []
-  }
+  return window.localStorage.getItem(EDITOR_TOKEN_KEY)
 }
 
-function saveCommunitySubmissions(submissions: CommunitySubmission[]) {
+export function saveEditorToken(token: string) {
   if (!canUseStorage()) {
     return
   }
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions))
+  window.localStorage.setItem(EDITOR_TOKEN_KEY, token)
 }
 
-export function createCommunitySubmission(draft: CommunitySubmissionDraft): CommunitySubmission {
-  const submission: CommunitySubmission = {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-    createdAt: new Date().toISOString(),
-    status: 'pending',
-    ...draft,
+export function clearEditorToken() {
+  if (!canUseStorage()) {
+    return
   }
 
-  const submissions = getCommunitySubmissions()
-  saveCommunitySubmissions([submission, ...submissions])
-  return submission
+  window.localStorage.removeItem(EDITOR_TOKEN_KEY)
 }
 
-export function updateSubmissionStatus(id: string, status: SubmissionStatus, editorialNotes?: string) {
-  const nextSubmissions = getCommunitySubmissions().map((submission) =>
-    submission.id === id
-      ? {
-          ...submission,
-          status,
-          editorialNotes,
-        }
-      : submission,
-  )
-
-  saveCommunitySubmissions(nextSubmissions)
+export async function createCommunitySubmission(draft: CommunitySubmissionDraft): Promise<CommunitySubmission> {
+  return requestJson<CommunitySubmission>('/submissions', {
+    method: 'POST',
+    body: JSON.stringify(draft),
+  })
 }
 
-export function getApprovedEntries(collection: ResourceCollectionKey): ResourceEntry[] {
-  return getCommunitySubmissions()
-    .filter((submission) => submission.collection === collection && submission.status === 'approved')
-    .map((submission) => ({
-      id: submission.id,
-      collection: submission.collection,
-      title: submission.title,
-      titlePashto: submission.titlePashto,
-      summary: submission.summary,
-      body: submission.body,
-      tags: submission.tags,
-      region: submission.region,
-      contributor: submission.contributor,
-      verificationStatus: 'community-approved',
-    }))
+export async function getCommunitySubmissions(token: string): Promise<CommunitySubmission[]> {
+  return requestJson<CommunitySubmission[]>('/admin/submissions', {}, token)
 }
 
-export function getVisibleEntries(collection: ResourceCollectionKey): ResourceEntry[] {
-  return [...seededResourceEntries[collection], ...getApprovedEntries(collection)]
+export async function updateSubmissionStatus(
+  id: string,
+  status: SubmissionStatus,
+  editorialNotes: string | undefined,
+  token: string,
+) {
+  return requestJson<CommunitySubmission>(`/admin/submissions/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status, editorialNotes }),
+  }, token)
 }
 
-export function getPendingSubmissionCount() {
-  return getCommunitySubmissions().filter((submission) => submission.status === 'pending').length
+export async function getVisibleEntries(collection: ResourceCollectionKey): Promise<ResourceEntry[]> {
+  try {
+    const approvedEntries = await requestJson<ResourceEntry[]>(`/resources/${collection}`)
+    return [...seededResourceEntries[collection], ...approvedEntries]
+  } catch {
+    return seededResourceEntries[collection]
+  }
+}
+
+export async function loginEditor(email: string, password: string) {
+  return requestJson<{ token: string, editor: EditorSession }>('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  })
+}
+
+export async function getEditorSession(token: string) {
+  const response = await requestJson<{ editor: EditorSession }>('/auth/session', {}, token)
+  return response.editor
+}
+
+export async function exportApprovedEntries(token: string) {
+  return requestJson<ApprovedExportResult>('/admin/export-approved', {
+    method: 'POST',
+  }, token)
+}
+
+export async function importApprovedEntries(token: string) {
+  return requestJson<ApprovedImportResult>('/admin/import-approved', {
+    method: 'POST',
+  }, token)
 }

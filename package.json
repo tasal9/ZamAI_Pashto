@@ -4,8 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:api": "node --env-file=.env --watch server/index.js",
+    "api": "node --env-file=.env server/index.js",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "hash:editor": "node scripts/generate-editor-hash.mjs"
   },
   "keywords": [
     "pashto",
@@ -19,6 +22,9 @@
   "description": "ZamAI Pashto - A language learning and cultural preservation platform for Pashto",
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.2",
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.0",

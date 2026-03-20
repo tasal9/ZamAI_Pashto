@@ -54,6 +54,13 @@ ZamAI Pashto is a comprehensive language learning and cultural preservation plat
 - Text extraction, cleaning, and Hugging Face dataset publishing examples
 - Source guidance for BBC Pashto, VOA Pashto, Pajhwok, and similar corpora
 
+### 🏛️ Community Library & Moderation
+
+- Backend-backed community submissions stored outside the browser
+- Editor-only moderation with JWT authentication
+- Dedicated searchable collection pages for poetry, books, names, and diaspora media
+- Import and export of approved entries into a versionable JSON file inside the repository
+
 ### 📖 About ZamAI (درباره)
 
 - Project mission and goals
@@ -80,11 +87,22 @@ cd ZamAI_Pashto
 # Install dependencies
 npm install
 
-# Start the development server
+# Create backend environment settings
+cp .env.example .env
+
+# Generate a password hash for the editor account
+npm run hash:editor -- "replace-with-a-strong-password"
+
+# Start the backend API in one terminal
+npm run dev:api
+
+# Start the frontend in a second terminal
 npm run dev
 ```
 
 The application will be available at `http://localhost:3000`
+
+Paste the generated hash into `EDITOR_PASSWORD_HASH` inside `.env`, then clear any `EDITOR_PASSWORD` value.
 
 ### Build for Production
 
@@ -99,9 +117,12 @@ This project does not yet include a frontend test runner. When one is added, sta
 ## 🛠️ Tech Stack
 
 - **Frontend Framework:** React 19
+- **Backend API:** Node.js + Express
 - **Language:** TypeScript
 - **Build Tool:** Vite
 - **Routing:** React Router v7
+- **Authentication:** JWT-based editor login
+- **Persistence:** JSON-backed API storage with import/export
 - **Styling:** CSS with CSS Variables
 - **Fonts:** Noto Naskh Arabic (Pashto), Inter (English)
 
@@ -109,8 +130,15 @@ This project does not yet include a frontend test runner. When one is added, sta
 
 ```text
 ZamAI_Pashto/
+├── data/
+│   ├── community-library.json
+│   └── community-submissions.json
 ├── public/
 │   └── favicon.svg
+├── server/
+│   ├── auth.js
+│   ├── dataStore.js
+│   └── index.js
 ├── src/
 │   ├── components/
 │   │   ├── Layout.tsx
@@ -128,6 +156,7 @@ ZamAI_Pashto/
 │   ├── App.tsx
 │   └── main.tsx
 ├── index.html
+├── .env.example
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts

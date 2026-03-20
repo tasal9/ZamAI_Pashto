@@ -1,18 +1,57 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getCommunitySubmissions, updateSubmissionStatus, type CommunitySubmission } from '../lib/communityStorage'
+import {
+  clearEditorToken,
+  exportApprovedEntries,
+  getCommunitySubmissions,
+  getEditorSession,
+  getStoredEditorToken,
+  importApprovedEntries,
+  loginEditor,
+  saveEditorToken,
+  updateSubmissionStatus,
+  type CommunitySubmission,
+  type EditorSession,
+} from '../lib/communityStorage'
 import './Moderation.css'
 
 function Moderation() {
   const [submissions, setSubmissions] = useState<CommunitySubmission[]>([])
   const [notes, setNotes] = useState<Record<string, string>>({})
+  const [authState, setAuthState] = useState<'loading' | 'unauthenticated' | 'authenticated'>('loading')
+  const [session, setSession] = useState<EditorSession | null>(null)
+  const [token, setToken] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [authError, setAuthError] = useState<string | null>(null)
+  const [actionMessage, setActionMessage] = useState<string | null>(null)
 
-  const refreshSubmissions = () => {
-    setSubmissions(getCommunitySubmissions())
+  const refreshSubmissions = async (authToken: string) => {
+    setSubmissions(await getCommunitySubmissions(authToken))
   }
 
   useEffect(() => {
-    refreshSubmissions()
+    const restoreSession = async () => {
+      const storedToken = getStoredEditorToken()
+
+      if (!storedToken) {
+        setAuthState('unauthenticated')
+        return
+      }
+
+      try {
+        const editorSession = await getEditorSession(storedToken)
+        setToken(storedToken)
+        setSession(editorSession)
+        await refreshSubmissions(storedToken)
+        setAuthState('authenticated')
+      } catch {
+        clearEditorToken()
+        setAuthState('unauthenticated')
+      }
+    }
+
+    void restoreSession()
   }, [])
 
   const pendingSubmissions = useMemo(
@@ -25,9 +64,101 @@ function Moderation() {
     [submissions],
   )
 
-  const handleReview = (submission: CommunitySubmission, status: 'approved' | 'rejected') => {
-    updateSubmissionStatus(submission.id, status, notes[submission.id]?.trim() || undefined)
-    refreshSubmissions()
+  const handleReview = async (submission: CommunitySubmission, status: 'approved' | 'rejected') => {
+    if (!token) {
+      return
+    }
+
+    await updateSubmissionStatus(submission.id, status, notes[submission.id]?.trim() || undefined, token)
+    await refreshSubmissions(token)
+    setActionMessage(`Submission ${status}.`)
+  }
+
+  const handleLogin = async () => {
+    setAuthError(null)
+
+    try {
+      const authResult = await loginEditor(email.trim(), password)
+      saveEditorToken(authResult.token)
+      setToken(authResult.token)
+      setSession(authResult.editor)
+      await refreshSubmissions(authResult.token)
+      setPassword('')
+      setAuthState('authenticated')
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Unable to sign in.')
+      setAuthState('unauthenticated')
+    }
+  }
+
+  const handleLogout = () => {
+    clearEditorToken()
+    setToken(null)
+    setSession(null)
+    setSubmissions([])
+    setNotes({})
+    setAuthError(null)
+    setActionMessage(null)
+    setAuthState('unauthenticated')
+  }
+
+  const handleExport = async () => {
+    if (!token) {
+      return
+    }
+
+    const result = await exportApprovedEntries(token)
+    setActionMessage(`Exported ${result.count} approved entries to ${result.path}.`)
+  }
+
+  const handleImport = async () => {
+    if (!token) {
+      return
+    }
+
+    const result = await importApprovedEntries(token)
+    await refreshSubmissions(token)
+    setActionMessage(`Imported ${result.importedCount} approved entries from ${result.path}.`)
+  }
+
+  if (authState !== 'authenticated' || !session || !token) {
+    return (
+      <div className="moderation-page">
+        <div className="container">
+          <div className="page-header fade-in">
+            <h1>Editor Moderation</h1>
+            <p className="pashto-text page-title-pashto">د مدیر د سمون برخه</p>
+            <p className="page-subtitle">
+              This area is protected. Only signed-in editors can review submissions or manage import and export operations.
+            </p>
+          </div>
+
+          <div className="moderation-login card">
+            <h2>Editor Sign In</h2>
+            <p>Use the editor account configured in your backend environment.</p>
+            <div className="moderation-login-grid">
+              <label>
+                <span>Email</span>
+                <input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="editor@example.com" />
+              </label>
+              <label>
+                <span>Password</span>
+                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Editor password" />
+              </label>
+            </div>
+            <div className="moderation-actions">
+              <button type="button" className="btn btn-primary" onClick={() => { void handleLogin() }}>
+                Sign in
+              </button>
+              <Link to="/resources" className="btn btn-outline">
+                Back to resources
+              </Link>
+            </div>
+            {authError ? <p className="copy-feedback copy-feedback-error">{authError}</p> : null}
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -39,6 +170,7 @@ function Moderation() {
           <p className="page-subtitle">
             Review saved community submissions before they become visible on the public resource collection pages.
           </p>
+          <p className="moderation-session">Signed in as {session.email}</p>
         </div>
 
         <div className="moderation-rules card">
@@ -65,6 +197,26 @@ function Moderation() {
             <strong>{reviewedSubmissions.filter((submission) => submission.status === 'rejected').length}</strong>
             <span>Rejected</span>
           </div>
+        </div>
+
+        <div className="moderation-sync card">
+          <div>
+            <h2>Versioned Import / Export</h2>
+            <p className="pashto-text">نسخه لرونکی واردول او صادرول</p>
+            <p>Export approved entries into data/community-library.json so they can be committed, reviewed, and synced across environments.</p>
+          </div>
+          <div className="moderation-actions">
+            <button type="button" className="btn btn-primary" onClick={() => { void handleExport() }}>
+              Export approved entries
+            </button>
+            <button type="button" className="btn btn-outline" onClick={() => { void handleImport() }}>
+              Import versioned entries
+            </button>
+            <button type="button" className="btn btn-outline" onClick={handleLogout}>
+              Sign out
+            </button>
+          </div>
+          {actionMessage ? <p className="copy-feedback">{actionMessage}</p> : null}
         </div>
 
         <section className="moderation-section">
@@ -107,10 +259,10 @@ function Moderation() {
                   />
                 </label>
                 <div className="moderation-actions">
-                  <button type="button" className="btn btn-primary" onClick={() => handleReview(submission, 'approved')}>
+                  <button type="button" className="btn btn-primary" onClick={() => { void handleReview(submission, 'approved') }}>
                     Approve for public view
                   </button>
-                  <button type="button" className="btn btn-outline" onClick={() => handleReview(submission, 'rejected')}>
+                  <button type="button" className="btn btn-outline" onClick={() => { void handleReview(submission, 'rejected') }}>
                     Reject
                   </button>
                 </div>

@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { createCommunitySubmission, getPendingSubmissionCount } from '../lib/communityStorage'
+import { createCommunitySubmission } from '../lib/communityStorage'
 import { resourceCollections, getResourceCollectionMeta, type ResourceCollectionKey } from '../data/resourceLibrary'
 import './Resources.css'
 
@@ -25,12 +25,8 @@ function Resources() {
   const [contributor, setContributor] = useState('')
   const [region, setRegion] = useState('')
   const [tags, setTags] = useState('')
-  const [pendingCount, setPendingCount] = useState(0)
+  const [isSaving, setIsSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState<SaveStatus | null>(null)
-
-  useEffect(() => {
-    setPendingCount(getPendingSubmissionCount())
-  }, [])
 
   const selectedCollection = useMemo(
     () => getResourceCollectionMeta(contributionType),
@@ -51,7 +47,7 @@ function Resources() {
     [contributor, context, pashtoTitle, region, selectedCollection.title, summary, tags, title],
   )
 
-  const handleSaveSubmission = () => {
+  const handleSaveSubmission = async () => {
     if (!title.trim() || !summary.trim() || !context.trim()) {
       setSaveStatus({
         status: 'error',
@@ -60,33 +56,42 @@ function Resources() {
       return
     }
 
-    createCommunitySubmission({
-      collection: contributionType as ResourceCollectionKey,
-      title: title.trim(),
-      titlePashto: pashtoTitle.trim() || undefined,
-      summary: summary.trim(),
-      body: context.trim(),
-      contributor: contributor.trim() || undefined,
-      region: region.trim() || undefined,
-      tags: tags.split(',').map((item) => item.trim()).filter(Boolean),
-    })
+    setIsSaving(true)
 
-    setTitle('')
-    setPashtoTitle('')
-    setSummary('')
-    setContext('')
-    setContributor('')
-    setRegion('')
-    setTags('')
-    setPendingCount(getPendingSubmissionCount())
-    setSaveStatus({
-      status: 'success',
-      message: 'Submission saved locally and moved into the moderation queue.',
-    })
+    try {
+      await createCommunitySubmission({
+        collection: contributionType,
+        title: title.trim(),
+        titlePashto: pashtoTitle.trim() || undefined,
+        summary: summary.trim(),
+        body: context.trim(),
+        contributor: contributor.trim() || undefined,
+        region: region.trim() || undefined,
+        tags: tags.split(',').map((item) => item.trim()).filter(Boolean),
+      })
 
-    window.setTimeout(() => {
-      setSaveStatus(null)
-    }, 2200)
+      setTitle('')
+      setPashtoTitle('')
+      setSummary('')
+      setContext('')
+      setContributor('')
+      setRegion('')
+      setTags('')
+      setSaveStatus({
+        status: 'success',
+        message: 'Submission sent to the backend and queued for editor review.',
+      })
+    } catch (error) {
+      setSaveStatus({
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Unable to save submission.',
+      })
+    } finally {
+      setIsSaving(false)
+      window.setTimeout(() => {
+        setSaveStatus(null)
+      }, 2200)
+    }
   }
 
   const handleCopyPreview = async () => {
@@ -159,7 +164,7 @@ function Resources() {
           <div className="section-header">
             <h2>Editorial Review Workflow</h2>
             <p className="pashto-text">د سمون او تایید کاري بهیر</p>
-            <p>Community content is saved immediately, but it remains pending until an editor approves it for public display.</p>
+            <p>Community content is stored in the backend immediately, but it remains pending until an editor approves it for public display.</p>
           </div>
           <div className="resources-grid two-up">
             <article className="resource-card card">
@@ -173,10 +178,10 @@ function Resources() {
             </article>
             <article className="resource-card card moderation-card">
               <h3>Moderation workspace</h3>
-              <p>Pending submissions in this browser: <strong>{pendingCount}</strong></p>
-              <p>Use the moderation page to add editorial notes, approve entries, or reject them before publication.</p>
+              <p>Moderation is now editor-only and backed by the API instead of browser storage.</p>
+              <p>Use the moderation page to sign in, review submissions, and import or export approved entries.</p>
               <Link to="/resources/moderation" className="btn btn-primary moderation-link">
-                Open moderation queue
+                Open editor moderation
               </Link>
             </article>
           </div>
@@ -188,7 +193,7 @@ function Resources() {
           <div className="section-header">
             <h2>Contribute to the Pashto Hub</h2>
             <p className="pashto-text">د پښتو مرکز ته مرسته واستوئ</p>
-            <p>Save submissions directly in the app, then review them in the moderation queue before publishing them to the public collection pages.</p>
+            <p>Save submissions directly into the backend, then review them in the moderation queue before publishing them to the public collection pages.</p>
           </div>
 
           <div className="contribution-layout">
@@ -258,8 +263,8 @@ function Resources() {
               </div>
 
               <div className="contribution-actions">
-                <button type="button" className="btn btn-primary" onClick={handleSaveSubmission}>
-                  Save Submission
+                <button type="button" className="btn btn-primary" onClick={() => { void handleSaveSubmission() }} disabled={isSaving}>
+                  {isSaving ? 'Saving...' : 'Save Submission'}
                 </button>
                 <button type="button" className="btn btn-outline" onClick={() => { void handleCopyPreview() }}>
                   Copy Preview

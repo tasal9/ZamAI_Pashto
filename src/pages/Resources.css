@@ -203,6 +203,11 @@
   margin-top: var(--spacing-lg);
 }
 
+.contribution-actions button[disabled] {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 .copy-feedback {
   margin-top: var(--spacing-md);
   color: var(--primary-green);

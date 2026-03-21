@@ -142,6 +142,13 @@
   border: 1px solid rgba(11, 116, 96, 0.12);
 }
 
+.pipeline-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
 .pipeline-cta h2 {
   margin-bottom: var(--spacing-sm);
 }
@@ -405,5 +412,9 @@
   .pipeline-cta {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .pipeline-cta-actions {
+    width: 100%;
   }
 }

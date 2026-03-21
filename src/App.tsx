@@ -10,6 +10,7 @@ import DataPipeline from './pages/DataPipeline'
 import Resources from './pages/Resources'
 import ResourceCollectionPage from './pages/ResourceCollection'
 import Moderation from './pages/Moderation'
+import Docs from './pages/Docs'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="resources/media" element={<ResourceCollectionPage collection="media" />} />
         <Route path="resources/moderation" element={<Moderation />} />
         <Route path="pipeline" element={<DataPipeline />} />
+        <Route path="docs" element={<Docs />} />
         <Route path="about" element={<About />} />
       </Route>
     </Routes>

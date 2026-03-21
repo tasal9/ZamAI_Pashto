@@ -11,6 +11,7 @@ const navItems = [
   { path: '/proverbs', label: 'Proverbs', labelPashto: 'متلونه' },
   { path: '/resources', label: 'Resources', labelPashto: 'سرچینې' },
   { path: '/pipeline', label: 'Data Pipeline', labelPashto: 'پایپ لاین' },
+  { path: '/docs', label: 'Docs', labelPashto: 'مستندات' },
   { path: '/about', label: 'About', labelPashto: 'په هکله' },
 ]
 
@@ -28,10 +29,10 @@ const footerLibraryLinks = [
 ]
 
 const footerProjectLinks = [
-  { path: '/pipeline#api-surface', label: 'API Surface' },
-  { path: '/resources/moderation#versioned-export', label: 'Data Export' },
-  { path: '/resources#contribute', label: 'Contribution Docs' },
-  { path: '/about', label: 'Project Overview' },
+  { path: '/docs#api', label: 'API Surface' },
+  { path: '/docs#export', label: 'Data Export' },
+  { path: '/docs#contributions', label: 'Contribution Docs' },
+  { path: '/docs', label: 'Project Overview' },
 ]
 
 function Layout() {
@@ -193,7 +194,7 @@ function Layout() {
                 ))}
               </nav>
               <p className="footer-note">
-                Versioned content, editor review, and reproducible pipelines for building durable Pashto language infrastructure.
+                Versioned content, editor review, and reproducible pipelines documented in one operational reference surface.
               </p>
             </div>
           </div>
@@ -201,7 +202,7 @@ function Layout() {
         <div className="footer-bottom">
           <div className="container footer-bottom-content">
             <p>&copy; 2024 ZamAI Pashto</p>
-            <p>Open-source platform for Pashto tools, curated resources, and long-term digital infrastructure.</p>
+            <p>Open-source platform for Pashto tools, reviewed resources, and documented language infrastructure.</p>
           </div>
         </div>
       </footer>

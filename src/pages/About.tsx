@@ -9,67 +9,67 @@ function About() {
           <h1>About ZamAI Pashto</h1>
           <p className="pashto-text page-title-pashto">د ZamAI پښتو په اړه</p>
           <p className="page-subtitle">
-            Open-source tools for Pashto language learning, AI translation, and cultural preservation
+            Platform overview for Pashto tools, reviewed resources, and maintainable language infrastructure
           </p>
         </div>
 
         {/* Mission Section */}
         <div className="mission-section fade-in">
           <div className="mission-card card">
-            <h2>🎯 Our Mission</h2>
+            <h2>Platform Mission</h2>
             <p className="pashto-text">زموږ هدف</p>
             <p className="mission-text">
-              ZamAI is dedicated to creating digital tools and resources to help preserve, 
-              teach, and celebrate Pashto language and Afghan culture through technology. 
-              We believe that language preservation is essential for maintaining cultural 
-              heritage and connecting communities across generations.
+              ZamAI Pashto is building a durable platform for Pashto language software,
+              reviewed public resources, and reproducible data workflows. The goal is not
+              only to publish tools, but to document and maintain the operational surfaces
+              required for long-term Pashto use online.
             </p>
           </div>
         </div>
 
         {/* What We Do */}
         <div className="what-we-do">
-          <h2>What We Do</h2>
+          <h2>Platform Capabilities</h2>
           <p className="pashto-text">موږ څه کوو</p>
           
           <div className="services-grid">
             <div className="service-card card">
               <div className="service-icon">📚</div>
-              <h3>Language Learning</h3>
+              <h3>Learning Surfaces</h3>
               <p className="pashto-text">ژبه زده کول</p>
               <p>
-                Interactive tools for learning the Pashto alphabet, building vocabulary, 
-                and mastering essential phrases for everyday communication.
+                Public learning modules for the alphabet, vocabulary, and translation tasks
+                that make Pashto easier to study and use consistently.
               </p>
             </div>
             
             <div className="service-card card">
               <div className="service-icon">🤖</div>
-              <h3>AI Translation</h3>
+              <h3>Translation Direction</h3>
               <p className="pashto-text">AI ژباړه</p>
               <p>
-                Advanced machine learning models for Pashto-English translation, 
-                trained on diverse datasets to provide accurate and culturally-aware translations.
+                Translation tooling and model direction for Pashto-English use cases,
+                supported by curated data and platform documentation.
               </p>
             </div>
             
             <div className="service-card card">
               <div className="service-icon">🏛️</div>
-              <h3>Cultural Preservation</h3>
+              <h3>Reviewed Reference Collections</h3>
               <p className="pashto-text">کلتوري ساتنه</p>
               <p>
-                Documenting and sharing Pashto proverbs, poetry, and traditions 
-                to ensure they are preserved for future generations.
+                Approved collections for proverbs, poetry, names, books, and media references
+                that can be published and expanded through editorial review.
               </p>
             </div>
             
             <div className="service-card card">
               <div className="service-icon">💻</div>
-              <h3>Open Source</h3>
+              <h3>Operational Infrastructure</h3>
               <p className="pashto-text">خلاص سرچینه</p>
               <p>
-                All our tools and datasets are open-source, enabling developers 
-                and researchers worldwide to contribute to Pashto language technology.
+                Open-source runtime components, documented workflows, and versioned content
+                management for maintainers and builders working on Pashto language technology.
               </p>
             </div>
           </div>
@@ -77,15 +77,15 @@ function About() {
 
         {/* Technical Projects */}
         <div className="projects-section">
-          <h2>Our Projects</h2>
+          <h2>Platform Components</h2>
           <p className="pashto-text">زموږ پروژې</p>
           
           <div className="projects-grid">
             <div className="project-card card">
               <h3>ZamAI-LLama3-Pashto</h3>
               <p className="project-desc">
-                An advanced LLaMA-3-based AI model fine-tuned for Pashto and English, 
-                capable of text generation, tutoring, and conversational AI.
+                A model track for Pashto and English generation, tutoring, and conversational use,
+                positioned as one component in the broader ZamAI platform.
               </p>
               <div className="project-tags">
                 <span className="tag">LLM</span>
@@ -97,8 +97,8 @@ function About() {
             <div className="project-card card">
               <h3>ZamAI-Translator</h3>
               <p className="project-desc">
-                Specialized translation model for accurate Pashto-English and 
-                English-Pashto translation with cultural context preservation.
+                Translation-focused platform component for Pashto-English and English-Pashto
+                workflows backed by curated datasets and operational documentation.
               </p>
               <div className="project-tags">
                 <span className="tag">Translation</span>
@@ -110,8 +110,8 @@ function About() {
             <div className="project-card card">
               <h3>Data Processing Pipeline</h3>
               <p className="project-desc">
-                Centralized, automated pipeline for collecting, cleaning, and 
-                normalizing Pashto language data for AI/ML model training.
+                The ingestion and transformation layer for collecting, cleaning, reviewing,
+                and publishing Pashto language data into maintainable downstream assets.
               </p>
               <div className="project-tags">
                 <span className="tag">Data</span>
@@ -127,17 +127,22 @@ function About() {
 
         <div className="pipeline-cta card">
           <div>
-            <p className="pipeline-cta-kicker">Corpus Building</p>
-            <h2>See how the Pashto data pipeline works</h2>
+            <p className="pipeline-cta-kicker">Operational Reference</p>
+            <h2>Review the live pipeline and platform documentation</h2>
             <p className="pashto-text">د پښتو د معلوماتو پایپ لاین وګورئ</p>
             <p>
-              Review the collection workflow, source guidance, and runnable scraping scripts used to gather
-              articles, PDFs, and training corpora.
+              Use the pipeline page for the runnable collection assets, then open the docs page for API,
+              contribution, and export references used by maintainers.
             </p>
           </div>
-          <Link to="/pipeline" className="btn btn-primary btn-lg pipeline-cta-link">
-            Open Data Pipeline
-          </Link>
+          <div className="pipeline-cta-actions">
+            <Link to="/pipeline" className="btn btn-primary btn-lg pipeline-cta-link">
+              Open Data Pipeline
+            </Link>
+            <Link to="/docs" className="btn btn-outline btn-lg pipeline-cta-link">
+              Open Platform Docs
+            </Link>
+          </div>
         </div>
 
         {/* About Pashto Language */}
@@ -175,46 +180,48 @@ function About() {
 
         {/* Contributing */}
         <div className="contributing-section">
-          <h2>Contributing</h2>
+          <h2>Contribution Modes</h2>
           <p className="pashto-text">مرسته کول</p>
           <p className="contributing-text">
-            ZamAI is an open-source project, and we welcome contributions from 
-            developers, linguists, and anyone passionate about Pashto language preservation.
+            The platform supports code changes, content submissions, editorial review, and public distribution.
+            Each contribution path should map to a documented workflow instead of an ad hoc update.
           </p>
           
           <div className="contribute-ways">
             <div className="contribute-card">
               <span className="contribute-icon">💻</span>
               <h4>Code</h4>
-              <p>Contribute to our repositories on GitHub</p>
+              <p>Extend platform components, routes, and infrastructure in the repository.</p>
             </div>
             <div className="contribute-card">
               <span className="contribute-icon">📝</span>
               <h4>Content</h4>
-              <p>Help add vocabulary, proverbs, and translations</p>
+              <p>Submit new resource entries for editorial review and public publication.</p>
             </div>
             <div className="contribute-card">
               <span className="contribute-icon">🔍</span>
               <h4>Review</h4>
-              <p>Help verify accuracy of translations and content</p>
+              <p>Verify translation quality, context, and collection integrity before approval.</p>
             </div>
             <div className="contribute-card">
               <span className="contribute-icon">📢</span>
-              <h4>Spread</h4>
-              <p>Share ZamAI with others interested in Pashto</p>
+              <h4>Operate</h4>
+              <p>Use the docs, moderation flow, and export process to keep public data current.</p>
             </div>
           </div>
         </div>
 
         {/* Contact */}
         <div className="contact-section card">
-          <h2>Get in Touch</h2>
+          <h2>Platform Links</h2>
           <p className="pashto-text">موږ سره اړیکه ونیسئ</p>
           <p>
-            Have questions, suggestions, or want to collaborate? 
-            We'd love to hear from you!
+            Use the public repository, model page, and platform docs as the primary operational entry points.
           </p>
           <div className="contact-links">
+            <Link to="/docs" className="contact-link">
+              <span>📘</span> Platform Docs
+            </Link>
             <a href="https://github.com/ZamAI-Pashto" target="_blank" rel="noopener noreferrer" className="contact-link">
               <span>🔗</span> GitHub Organization
             </a>
@@ -227,7 +234,7 @@ function About() {
         {/* Footer Quote */}
         <div className="footer-quote">
           <p className="quote-pashto pashto-text">ژبه د ولس هویت دی</p>
-          <p className="quote-trans">"Language is the identity of a nation"</p>
+          <p className="quote-trans">"Language infrastructure helps that identity endure online."</p>
         </div>
       </div>
     </div>

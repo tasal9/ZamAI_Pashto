@@ -32,9 +32,9 @@ const features = [
   },
   {
     icon: '🏠',
-    title: 'Resources & Community',
-    titlePashto: 'سرچینې او ټولنه',
-    description: 'Browse poetry, books, names, media, diaspora notes, and community contribution lanes.',
+    title: 'Reviewed Resources',
+    titlePashto: 'تایید شوې سرچینې',
+    description: 'Browse approved poetry, books, names, media, and reference collections prepared for public use.',
     link: '/resources',
   },
   {
@@ -46,26 +46,26 @@ const features = [
   },
 ]
 
-const communityPillars = [
+const platformAudiences = [
   {
-    title: 'For Speakers',
-    titlePashto: 'د ویونکو لپاره',
-    description: 'A place to keep Pashto visible online through language, stories, sayings, and useful daily tools.',
+    title: 'For Users',
+    titlePashto: 'د کاروونکو لپاره',
+    description: 'Access practical Pashto tools, approved reference material, and reliable learning surfaces in one place.',
   },
   {
     title: 'For Learners',
     titlePashto: 'د زده کوونکو لپاره',
-    description: 'A practical path from alphabet to phrases, vocabulary, culture, and real reading confidence.',
+    description: 'Move from alphabet and vocabulary into structured reading, reference, and translation support.',
   },
   {
-    title: 'For Writers & Teachers',
-    titlePashto: 'د لیکوالانو او ښوونکو لپاره',
-    description: 'A growing base for curated language material that can support lessons, writing, and community sharing.',
+    title: 'For Editors & Teachers',
+    titlePashto: 'د سمونګرو او ښوونکو لپاره',
+    description: 'Use curated material, editorial review, and reusable collections for teaching and public publication.',
   },
   {
     title: 'For Builders',
     titlePashto: 'د جوړوونکو لپاره',
-    description: 'Open resources, data workflows, and model direction for anyone building Pashto-first tools.',
+    description: 'Build against stable workflows, reviewed data, and platform-level infrastructure for Pashto software.',
   },
 ]
 
@@ -77,28 +77,28 @@ const resourceAreas = [
     cta: 'Open learning tools',
   },
   {
-    title: 'Culture & Identity',
-    items: ['Proverbs and sayings', 'Context around Afghan culture', 'A place to preserve expressions and meaning'],
+    title: 'Reference Collections',
+    items: ['Proverbs and sayings', 'Contextual cultural references', 'Structured entries that preserve meaning and usage'],
     link: '/proverbs',
-    cta: 'Explore culture',
+    cta: 'Open reference collection',
   },
   {
-    title: 'Pashto Technology',
-    items: ['Data collection workflows', 'AI translation direction', 'Open-source language infrastructure'],
-    link: '/pipeline',
-    cta: 'See the pipeline',
+    title: 'Platform Workflows',
+    items: ['Data collection workflows', 'Documented export and review flow', 'Open-source language infrastructure'],
+    link: '/docs',
+    cta: 'Open platform docs',
   },
   {
-    title: 'Community Resources',
-    items: ['Poetry and reading shelves', 'Names and meanings', 'Media and diaspora connections'],
+    title: 'Approved Library Surfaces',
+    items: ['Poetry and reading collections', 'Names and meanings', 'Media and diaspora references'],
     link: '/resources',
-    cta: 'Open resources',
+    cta: 'Open reviewed library',
   },
 ]
 
 const collectionPreviews = [
   {
-    title: 'Poetry Shelf',
+    title: 'Poetry Collection',
     titlePashto: 'د شاعرۍ زېرمتون',
     items: ['Rahman Baba poetry', 'Khushal Khan Khattak selections', 'Landay folk verse'],
     link: '/resources/poetry',
@@ -110,7 +110,7 @@ const collectionPreviews = [
     link: '/resources/names',
   },
   {
-    title: 'Media & Diaspora',
+    title: 'Media Reference',
     titlePashto: 'رسنۍ او کډوالي',
     items: ['BBC Pashto', 'VOA Pashto', 'Diaspora learning circles'],
     link: '/resources/media',
@@ -119,20 +119,20 @@ const collectionPreviews = [
 
 const contributionLanes = [
   {
-    title: 'Words & Phrases',
-    description: 'Share useful daily words, greetings, family expressions, or regional usage notes.',
+    title: 'Lexical Entries',
+    description: 'Submit useful words, phrases, greetings, and regional usage notes with enough context for review.',
   },
   {
     title: 'Idioms & Proverbs',
-    description: 'Add idioms, mataluna, and short explanations that preserve local wisdom and context.',
+    description: 'Add proverbs and idioms with short explanations so editors can verify meaning and usage.',
   },
   {
-    title: 'Readings & Excerpts',
-    description: 'Contribute short reading passages, folktale summaries, or learner-friendly texts.',
+    title: 'Reading Passages',
+    description: 'Contribute short readings, excerpts, or summaries suitable for public reference collections.',
   },
   {
-    title: 'Cultural Notes',
-    description: 'Document customs, names, oral history, media references, and diaspora experiences.',
+    title: 'Reference Notes',
+    description: 'Document names, customs, oral history, media references, and diaspora notes in reviewable form.',
   },
 ]
 
@@ -189,12 +189,12 @@ function Home() {
       <section className="pillars-section">
         <div className="container">
           <div className="section-header">
-            <h2>Who This Space Is For</h2>
+            <h2>Who The Platform Supports</h2>
             <p className="pashto-text">دا ځای د چا لپاره دی</p>
-            <p>ZamAI should serve people who speak Pashto today and people working to carry it forward.</p>
+            <p>ZamAI is structured for users, editors, and builders who need reliable Pashto tools and documented workflows.</p>
           </div>
           <div className="pillars-grid">
-            {communityPillars.map((pillar) => (
+            {platformAudiences.map((pillar) => (
               <article key={pillar.title} className="pillar-card card">
                 <h3>{pillar.title}</h3>
                 <p className="pashto-text">{pillar.titlePashto}</p>
@@ -224,9 +224,9 @@ function Home() {
       <section className="features-section">
         <div className="container">
           <div className="section-header">
-            <h2>Core Pashto Tools</h2>
+            <h2>Platform Modules</h2>
             <p className="pashto-text">د پښتو بنسټیز وسایل</p>
-            <p>Use the current tools as the foundation for a larger Pashto knowledge and community platform.</p>
+            <p>Each module exposes a specific user surface inside the broader Pashto platform.</p>
           </div>
           <div className="features-grid">
             {features.map((feature, index) => (
@@ -247,9 +247,9 @@ function Home() {
       <section className="resource-hub-section">
         <div className="container">
           <div className="section-header">
-            <h2>What Belongs Here</h2>
+            <h2>Platform Surface Map</h2>
             <p className="pashto-text">دلته څه باید وي</p>
-            <p>The goal is not just lessons. It is a growing Pashto home for language, culture, and digital access.</p>
+            <p>The platform is organized across tools, reviewed collections, and documented workflows rather than a single general hub.</p>
           </div>
           <div className="resource-hub-grid">
             {resourceAreas.map((area) => (
@@ -272,9 +272,9 @@ function Home() {
       <section className="collections-preview-section">
         <div className="container">
           <div className="section-header">
-            <h2>Living Pashto Collections</h2>
+            <h2>Supported Public Collections</h2>
             <p className="pashto-text">ژوندي پښتو ټولګې</p>
-            <p>These are the kinds of real collections the site can hold and keep growing.</p>
+            <p>These collection surfaces represent the approved public library the platform can maintain and expand.</p>
           </div>
           <div className="collections-preview-grid">
             {collectionPreviews.map((collection) => (
@@ -341,11 +341,10 @@ function Home() {
         <div className="container">
           <div className="future-topics-card card">
             <div className="future-topics-copy">
-              <h2>Community Contribution Lanes</h2>
+              <h2>Contribution Intake Categories</h2>
               <p className="pashto-text">د ټولنې د مرستې لارې</p>
               <p>
-                Pashto speakers should be able to help shape the site with material that reflects lived language,
-                not just curated pages from one editor.
+                Public submissions stay open, but they enter a structured editorial workflow before they become part of the platform library.
               </p>
             </div>
             <div className="future-topics-list">
@@ -367,18 +366,18 @@ function Home() {
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
-            <h2>Help Build a Stronger Pashto Home Online</h2>
+            <h2>Operate, contribute to, and extend the Pashto platform</h2>
             <p className="pashto-text">راځئ چې د پښتو لپاره آنلاین یو قوي کور جوړ کړو</p>
-            <p>Learn, contribute, review, and help expand what this platform can hold for Pashto speakers.</p>
+            <p>Use the live tools, submit reviewed content, or open the docs to understand how the platform is structured.</p>
             <div className="cta-actions">
-              <Link to="/alphabet" className="btn btn-primary btn-lg">
-                Start with the Alphabet
+              <Link to="/docs" className="btn btn-primary btn-lg">
+                Open Platform Docs
               </Link>
               <Link to="/resources#contribute" className="btn btn-outline btn-lg cta-secondary-btn">
-                Contribute Pashto Content
+                Submit Reviewed Content
               </Link>
-              <Link to="/about" className="btn btn-outline btn-lg cta-secondary-btn">
-                See the Mission
+              <Link to="/pipeline" className="btn btn-outline btn-lg cta-secondary-btn">
+                Inspect Data Pipeline
               </Link>
             </div>
           </div>

@@ -152,7 +152,7 @@ function Layout() {
           <div className="footer-brand-panel">
             <p className="footer-eyebrow">Open Pashto Platform</p>
             <h3>ZamAI Pashto</h3>
-            <p className="pashto-text footer-brand-pashto">د پښتو ژبې د وسایلو، سرچینو او ډیجیټلي بنسټ لپاره پرانیستی پلیټفارم</p>
+            <p className="pashto-text footer-brand-pashto">د پښتو ژبې د وسایلو, سرچینو او ډیجیټلي بنسټ لپاره پرانیستی پلیټفارم</p>
             <p className="footer-brand-copy">
               An open platform for Pashto language tools, reviewed reference collections, and maintainable
               data workflows that support long-term digital use.

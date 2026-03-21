@@ -14,6 +14,24 @@ const navItems = [
   { path: '/about', label: 'About', labelPashto: 'په هکله' },
 ]
 
+const footerExploreLinks = [
+  { path: '/', label: 'Home' },
+  { path: '/alphabet', label: 'Alphabet' },
+  { path: '/vocabulary', label: 'Vocabulary' },
+  { path: '/translator', label: 'Translator' },
+]
+
+const footerLibraryLinks = [
+  { path: '/proverbs', label: 'Proverbs & Culture' },
+  { path: '/resources', label: 'Resources' },
+  { path: '/pipeline', label: 'Data Pipeline' },
+]
+
+const footerProjectLinks = [
+  { path: '/resources/moderation', label: 'Editor Moderation' },
+  { path: '/about', label: 'About ZamAI' },
+]
+
 function Layout() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -130,29 +148,58 @@ function Layout() {
       </main>
 
       <footer className="footer">
-        <div className="container footer-content">
-          <div className="footer-brand">
+        <div className="container footer-shell">
+          <div className="footer-brand-panel">
+            <p className="footer-eyebrow">Pashto Language Platform</p>
             <h3>ZamAI Pashto</h3>
-            <p className="pashto-text">د پښتو ویونکو، زده کوونکو او جوړوونکو لپاره یو ګډ کور</p>
-            <p>A shared digital home for Pashto speakers, learners, and builders.</p>
+            <p className="pashto-text footer-brand-pashto">د پښتو ویونکو، زده کوونکو او جوړوونکو لپاره یو ګډ کور</p>
+            <p className="footer-brand-copy">
+              A shared digital home for Pashto speakers, learners, and builders, combining language tools,
+              curated cultural references, and practical infrastructure for Pashto online.
+            </p>
+            <div className="footer-pill-row">
+              <span className="footer-pill">Language Learning</span>
+              <span className="footer-pill">Cultural Memory</span>
+              <span className="footer-pill">Open Infrastructure</span>
+            </div>
           </div>
-          <div className="footer-links">
-            <h4>Quick Links</h4>
-            <nav>
-              {navItems.slice(0, 6).map((item) => (
-                <Link key={item.path} to={item.path}>{item.label}</Link>
-              ))}
-              <Link to="/resources/moderation">Editor Moderation</Link>
-            </nav>
-          </div>
-          <div className="footer-about">
-            <h4>About ZamAI</h4>
-            <p>Open-source tools, cultural resources, and language infrastructure designed to strengthen Pashto online.</p>
+
+          <div className="footer-nav-grid">
+            <div className="footer-column">
+              <h4>Explore</h4>
+              <nav>
+                {footerExploreLinks.map((item) => (
+                  <Link key={item.path} to={item.path}>{item.label}</Link>
+                ))}
+              </nav>
+            </div>
+
+            <div className="footer-column">
+              <h4>Library</h4>
+              <nav>
+                {footerLibraryLinks.map((item) => (
+                  <Link key={item.path} to={item.path}>{item.label}</Link>
+                ))}
+              </nav>
+            </div>
+
+            <div className="footer-column footer-column-wide">
+              <h4>Project</h4>
+              <nav>
+                {footerProjectLinks.map((item) => (
+                  <Link key={item.path} to={item.path}>{item.label}</Link>
+                ))}
+              </nav>
+              <p className="footer-note">
+                Open-source tools, cultural resources, and language infrastructure designed to strengthen Pashto online.
+              </p>
+            </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="container">
-            <p>&copy; 2024 ZamAI Pashto. Open Source Project.</p>
+          <div className="container footer-bottom-content">
+            <p>&copy; 2024 ZamAI Pashto</p>
+            <p>Open source, community-led, and built for long-term Pashto visibility online.</p>
           </div>
         </div>
       </footer>

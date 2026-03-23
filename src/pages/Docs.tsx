@@ -84,7 +84,7 @@ const endpointExamples = [
     example: 'curl -X POST http://localhost:3001/api/auth/login -H "Content-Type: application/json" -d "{\"email\":\"editor@example.com\",\"password\":\"your-password\"}"',
     requestJson: `{
   "email": "editor@example.com",
-  "password": "your-password"
+  "password": "<redacted>"
 }`,
     responseJson: `{
   "token": "<jwt-token>",
